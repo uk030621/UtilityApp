@@ -54,6 +54,9 @@ export async function POST(request) {
     );
   }
 
+  console.log("PERSONAL ALLOWANCE !!!!: ", personalAllowance);
+  console.log("BASIC RATE !!!!: ", basicRate);
+
   // Tax Calculation Logic
   let taxAt0Percent = 0;
   let taxAt20Percent = 0;
@@ -90,22 +93,24 @@ export async function POST(request) {
     taxAt0Percent = 0;
   } else if (income <= basicThreshold) {
     taxAt0Percent = 0;
-    taxAt20Percent = (income - personalAllowance) * basicRate;
+    taxAt20Percent = ((income - personalAllowance) * basicRate) / 100;
   } else if (income < taperThreshold) {
     taxAt0Percent = 0;
-    taxAt20Percent = (basicThreshold - personalAllowance) * basicRate;
-    taxAt40Percent = (income - basicThreshold) * higherRate;
+    taxAt20Percent = ((basicThreshold - personalAllowance) * basicRate) / 100;
+    taxAt40Percent = ((income - basicThreshold) * higherRate) / 100;
   } else if (income > higherThreshold) {
     taxAt0Percent = 0;
-    taxAt20Percent = (basicThreshold - personalAllowance) * basicRate;
+    taxAt20Percent = ((basicThreshold - personalAllowance) * basicRate) / 100;
     taxAt40Percent =
-      (higherThreshold - (basicThreshold - personalAllowance)) * higherRate;
-    taxAt45Percent = (income - higherThreshold) * additionalRate;
+      ((higherThreshold - (basicThreshold - personalAllowance)) * higherRate) /
+      100;
+    taxAt45Percent = ((income - higherThreshold) * additionalRate) / 100;
   } else {
     taxAt0Percent = 0;
-    taxAt20Percent = (basicThreshold - personalAllowance) * basicRate;
+    taxAt20Percent = ((basicThreshold - personalAllowance) * basicRate) / 100;
     taxAt40Percent =
-      (taxableIncome - (basicThreshold - personalAllowance)) * higherRate;
+      ((taxableIncome - (basicThreshold - personalAllowance)) * higherRate) /
+      100;
   }
 
   const totalIncomeTax =
@@ -123,9 +128,11 @@ export async function POST(request) {
   let ni = 0;
   if (income > primaryThreshold) {
     ni =
-      (Math.min(income, upperEarningsLimit) - primaryThreshold) * primaryRate;
+      ((Math.min(income, upperEarningsLimit) - primaryThreshold) *
+        primaryRate) /
+      100;
     if (income > upperEarningsLimit) {
-      ni += (income - upperEarningsLimit) * upperRate;
+      ni += ((income - upperEarningsLimit) * upperRate) / 100;
     }
   }
   console.log("National Insurance = £", ni);
@@ -134,10 +141,11 @@ export async function POST(request) {
   let eni = 0;
   if (income > primaryThreshold) {
     eni =
-      (Math.min(income, upperEarningsLimit) - primaryThreshold) *
-      selfPrimaryRate;
+      ((Math.min(income, upperEarningsLimit) - primaryThreshold) *
+        selfPrimaryRate) /
+      100;
     if (income > upperEarningsLimit) {
-      eni += (income - upperEarningsLimit) * selfUpperRate;
+      eni += ((income - upperEarningsLimit) * selfUpperRate) / 100;
     }
   }
   console.log("Employed National Insurance = £", ni);

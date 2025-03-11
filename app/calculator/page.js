@@ -61,7 +61,7 @@ export default function Calculator() {
   };
 
   return (
-    <div className="pt-4 px-4 min-h-screen bg-gradient-to-b from-yellow-100 to-yellow-300 ">
+    <div className="pt-4 px-4 min-h-screen bg-gradient-to-b from-slate-100 to-slate-500 ">
       {/* Header */}
       <div className="">
         <div className="flex justify-center"></div>

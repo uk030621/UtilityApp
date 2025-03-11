@@ -29,6 +29,22 @@ export default function TaxParameters() {
     },
   });
 
+  const unitMapping = {
+    personalAllowance: "£",
+    basicRate: "%",
+    higherRate: "%",
+    additionalRate: "%",
+    basicThreshold: "£",
+    higherThreshold: "£",
+    taperThreshold: "£",
+    primaryThreshold: "£",
+    upperEarningsLimit: "£",
+    primaryRate: "%",
+    upperRate: "%",
+    selfPrimaryRate: "%",
+    selfUpperRate: "%",
+  };
+
   useEffect(() => {
     if (!fetched) {
       fetch("/api/tax-parameters")
@@ -49,9 +65,9 @@ export default function TaxParameters() {
       year: new Date().getFullYear(),
       incomeTax: {
         personalAllowance: 12570,
-        basicRate: 0.2,
-        higherRate: 0.4,
-        additionalRate: 0.45,
+        basicRate: 20,
+        higherRate: 40,
+        additionalRate: 45,
         basicThreshold: 50270,
         higherThreshold: 125140,
         taperThreshold: 100000,
@@ -59,10 +75,10 @@ export default function TaxParameters() {
       nationalInsurance: {
         primaryThreshold: 12570,
         upperEarningsLimit: 50270,
-        primaryRate: 0.08,
-        upperRate: 0.02,
-        selfPrimaryRate: 0.06,
-        selfUpperRate: 0.02,
+        primaryRate: 8,
+        upperRate: 2,
+        selfPrimaryRate: 6,
+        selfUpperRate: 2,
       },
     };
     try {
@@ -351,7 +367,11 @@ export default function TaxParameters() {
                               .replace(/\b\w/g, (char) => char.toUpperCase())}
                             :
                           </strong>{" "}
-                          {value}
+                          {unitMapping[key] === "£"
+                            ? `£${value}`
+                            : unitMapping[key] === "%"
+                            ? `${value}%`
+                            : value}
                         </li>
                       ))}
                     </ul>
@@ -368,7 +388,11 @@ export default function TaxParameters() {
                                 .replace(/\b\w/g, (char) => char.toUpperCase())}
                               :
                             </strong>{" "}
-                            {value}
+                            {unitMapping[key] === "£"
+                              ? `£${value}`
+                              : unitMapping[key] === "%"
+                              ? `${value}%`
+                              : value}
                           </li>
                         )
                       )}

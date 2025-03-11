@@ -88,7 +88,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-start min-h-screen bg-gradient-to-b from-yellow-100 to-yellow-300 px-4">
+    <main className="flex flex-col items-center justify-start min-h-screen bg-gradient-to-b from-slate-100 to-slate-500 px-4">
       <div className="flex self-start">
         <Link
           className="bg-slate-900 text-white text-sm rounded-md mt-6 py-2 px-2 hover:bg-slate-700"

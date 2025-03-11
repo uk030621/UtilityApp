@@ -17,7 +17,7 @@ export default function Home() {
   }, [status, router, redirecting]);
 
   if (status === "loading") {
-    return <p className="text-gray-500 text-sm">Loading...</p>; // Shows a brief message
+    return <p className="text-gray-500 p-6 text-basic">Loading...</p>; // Shows a brief message
   }
 
   if (status === "unauthenticated") {
@@ -25,41 +25,44 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-start py-4 bg-gradient-to-b from-yellow-100 to-yellow-300 px-4">
-      <h1 className="text-3xl font-bold mb-6">MY UTILITY APP 🌏</h1>
+    <main className="flex min-h-screen flex-col items-center justify-start py-4 bg-gradient-to-b from-slate-100 to-slate-500 px-4">
+      <h1 className="text-3xl font-bold mb-6">
+        HANDY APPS <span className="text-5xl">👋</span>
+      </h1>
       {/*<h1 className="text-xl font-extrabold">
         Welcome{session?.user?.name ? `, ${session.user.name}` : ""}!
       </h1>*/}
-      <h1 className="text-xl font-extrabold text-black">
+      <h1 className="text-2xl font-extrabold text-black">
         Welcome
         {session?.user?.name ? `, ${session.user.name.split(" ")[0]}` : ""}!
       </h1>
 
-      <p className="text-black mb-5 ">You are signed-in👍</p>
-      <p className="text-black pb-2">Select an option from below...</p>
+      <p className="text-black mb-5 ">You are signed-in</p>
+      <p className="text-black text-xl pb-3">Select an app from below...</p>
       <ul className="list-none text-center">
-        <li className="mb-2">
-          <Link
-            href="/crud"
-            className="text-blue-700  text-basic font-light hover:underline"
-          >
-            Simple Activity List
-          </Link>
-        </li>
-        <li className="mb-2">
+        <li className="mb-4">
           <Link
             href="/taxparameters"
-            className="text-blue-700  text-basic font-light hover:underline "
+            className="text-black  text-basic font-light hover:underline "
           >
             Basic Tax Calculator
           </Link>
         </li>
-        <li className="mb-2">
+
+        <li className="mb-4">
           <Link
             href="/qrcodegen"
-            className="text-blue-700  text-basic font-light hover:underline"
+            className="text-black  text-basic font-light hover:underline"
           >
             QR Code Generator
+          </Link>
+        </li>
+        <li className="mb-4">
+          <Link
+            href="/crud"
+            className="text-black  text-basic font-light hover:underline"
+          >
+            Reminders
           </Link>
         </li>
       </ul>

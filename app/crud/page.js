@@ -44,10 +44,10 @@ export default function Home() {
     fetchPosts();
   };
 
-  if (status === "loading") return <p>Loading...</p>;
+  if (status === "loading") return <p className="p-6 text-xl">Loading...</p>;
 
   return (
-    <div className="min-h-screen flex flex-col items-center p-6 w-full max-w-md mx-auto bg-gradient-to-b from-yellow-100 to-yellow-300 px-4">
+    <div className="m-0 min-h-screen flex flex-col items-center p-6 w-full  bg-gradient-to-b from-slate-100 to-slate-500 px-4">
       <div className=" shadow-md rounded-lg p-6 w-full max-w-md">
         {session ? (
           <>
@@ -64,7 +64,7 @@ export default function Home() {
               Sign Out
             </button>*/}
             <h1 className="text-basic mt-4 text-black">
-              Activity Mgr:{" "}
+              Reminders for:{" "}
               <span className="font-bold">{session.user.name}</span>
             </h1>
             <form onSubmit={handleSubmit} className="mt-3 space-y-3">
@@ -87,12 +87,12 @@ export default function Home() {
                 type="submit"
                 className="w-full bg-slate-900 text-sm text-white p-2 rounded-md hover:bg-slate-700"
               >
-                {editing ? "Update" : "Create"} Activity
+                {editing ? "Update" : "Create"} Reminder
               </button>
             </form>
 
             <h2 className="mt-6 text-basic font-semibold text-black">
-              Your Activities
+              Your Reminders...
             </h2>
             {posts.map((post) => (
               <div
