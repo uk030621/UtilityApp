@@ -37,7 +37,7 @@ export default function Register() {
   };
 
   return (
-    <section className="w-full h-screen flex items-start px-4 justify-center py-6 bg-gradient-to-b from-yellow-100 to-yellow-300 ">
+    <section className="w-full h-screen flex items-start px-4 justify-center py-6 bg-gradient-to-b from-slate-100 to-slate-500 ">
       <form
         ref={ref}
         action={handleSubmit}

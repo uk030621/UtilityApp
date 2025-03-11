@@ -23,7 +23,7 @@ export default function Login() {
   };
 
   return (
-    <section className="w-full h-screen px-4 flex items-start justify-center py-6 bg-gradient-to-b from-yellow-100 to-yellow-300 ">
+    <section className="w-full h-screen px-4 flex items-start justify-center py-6 bg-gradient-to-b from-slate-100 to-slate-500 ">
       <form
         className="p-6 w-full max-w-[400px] flex flex-col justify-between items-center gap-2 
         border border-solid border-black bg-white rounded text-black"
