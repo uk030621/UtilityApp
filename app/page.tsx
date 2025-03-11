@@ -65,6 +65,14 @@ export default function Home() {
             Reminders
           </Link>
         </li>
+        <li className="mb-4">
+          <Link
+            href="/basiccalc"
+            className="text-black  text-basic font-light hover:underline"
+          >
+            Calculator
+          </Link>
+        </li>
       </ul>
       <p className="text-black text-1xl mt-2 font-extrabold">OR</p>
       <button
