@@ -3,63 +3,45 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { evaluate } from "mathjs";
+
+// Function to safely evaluate math expressions
+const calculateSafeExpression = (expression: string): string => {
+  try {
+    // Allow only numbers, +, -, *, /, %, (, and )
+    if (!/^[0-9+\-*/%.() ]+$/.test(expression)) {
+      return "Error";
+    }
+
+    // Use Function constructor to safely evaluate
+    const result = new Function(`return (${expression})`)();
+
+    return isNaN(result) ? "Error" : result.toString();
+  } catch {
+    return "Error";
+  }
+};
 
 export default function Calculator() {
   const [input, setInput] = useState<string>("");
   const [history, setHistory] = useState<string[]>([]);
 
-  const validateInput = (value: string) => {
-    // Allow only valid characters: digits, operators, parentheses, decimals
-    const validPattern = /^[0-9+\-*/().%√x\s]*$/;
-    return validPattern.test(value);
-  };
-
   const handleButtonClick = (value: string) => {
     if (value === "=") {
-      try {
-        if (validateInput(input)) {
-          const result = evaluate(input).toString();
-          setInput(result);
-          setHistory(
-            (prev) => [input + " = " + result, ...prev].slice(0, 5) // Store last 5 calculations
-          );
-        } else {
-          setInput("Invalid Input");
-        }
-      } catch {
-        setInput("Error");
-      }
+      const result = calculateSafeExpression(input);
+      setInput(result);
+      setHistory((prev) => [input + " = " + result, ...prev].slice(0, 5)); // Store last 5 calculations
     } else if (value === "C") {
       setInput("");
     } else if (value === "←") {
       setInput(input.slice(0, -1));
     } else if (value === "x²") {
-      try {
-        setInput((prev) =>
-          prev ? Math.pow(parseFloat(prev), 2).toString() : ""
-        );
-      } catch {
-        setInput("Error");
-      }
+      setInput((prev) =>
+        prev ? Math.pow(parseFloat(prev), 2).toString() : ""
+      );
     } else if (value === "√x") {
-      try {
-        setInput((prev) =>
-          prev
-            ? parseFloat(prev) >= 0
-              ? Math.sqrt(parseFloat(prev)).toString()
-              : "Invalid"
-            : ""
-        );
-      } catch {
-        setInput("Error");
-      }
+      setInput((prev) => (prev ? Math.sqrt(parseFloat(prev)).toString() : ""));
     } else if (value === "%") {
-      try {
-        setInput((prev) => (prev ? (parseFloat(prev) / 100).toString() : ""));
-      } catch {
-        setInput("Error");
-      }
+      setInput((prev) => (prev ? (parseFloat(prev) / 100).toString() : ""));
     } else {
       setInput((prev) => prev + value);
     }
@@ -70,28 +52,26 @@ export default function Calculator() {
   const buttons = [
     { label: "C", style: "bg-blue-500 hover:bg-blue-600" },
     { label: "←", style: "bg-blue-500 hover:bg-blue-600" },
-    { label: "(", style: "bg-blue-500 hover:bg-blue-600" },
-    { label: ")", style: "bg-blue-500 hover:bg-blue-600" },
-
+    { label: "x²", style: "bg-blue-500 hover:bg-blue-600" },
+    { label: "√x", style: "bg-blue-500 hover:bg-blue-600" },
+    { label: "(", style: "bg-gray-600 hover:bg-gray-700" },
+    { label: ")", style: "bg-gray-600 hover:bg-gray-700" },
+    { label: "%", style: "bg-gray-600 hover:bg-gray-700" },
+    { label: "/", style: "bg-gray-600 hover:bg-gray-700" },
     { label: "7", style: "bg-gray-600 hover:bg-gray-700" },
     { label: "8", style: "bg-gray-600 hover:bg-gray-700" },
     { label: "9", style: "bg-gray-600 hover:bg-gray-700" },
-    { label: "/", style: "bg-gray-600 hover:bg-gray-700" },
-
+    { label: "*", style: "bg-gray-600 hover:bg-gray-700" },
     { label: "4", style: "bg-gray-600 hover:bg-gray-700" },
     { label: "5", style: "bg-gray-600 hover:bg-gray-700" },
     { label: "6", style: "bg-gray-600 hover:bg-gray-700" },
-    { label: "*", style: "bg-gray-600 hover:bg-gray-700" },
-
+    { label: "-", style: "bg-gray-600 hover:bg-gray-700" },
     { label: "1", style: "bg-gray-600 hover:bg-gray-700" },
     { label: "2", style: "bg-gray-600 hover:bg-gray-700" },
     { label: "3", style: "bg-gray-600 hover:bg-gray-700" },
-    { label: "-", style: "bg-gray-600 hover:bg-gray-700" },
-
-    { label: "0", style: "bg-gray-600 hover:bg-gray-700" },
-    { label: ".", style: "bg-gray-600 hover:bg-gray-700" },
-    { label: "%", style: "bg-gray-600 hover:bg-gray-700" },
     { label: "+", style: "bg-gray-600 hover:bg-gray-700" },
+    { label: "0", style: "bg-gray-600 hover:bg-gray-700 col-span-2" },
+    { label: ".", style: "bg-gray-600 hover:bg-gray-700" },
   ];
 
   return (
