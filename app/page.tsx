@@ -40,24 +40,15 @@ export default function Home() {
       <p className="text-black mb-5 ">You are signed-in</p>
       <p className="text-black text-xl pb-3">Select an app from below...</p>
       <ul className="list-none text-center">
-        <li className="mb-4">
+        <li className="mb-2">
           <Link
-            href="/taxparameters"
-            className="text-black  text-basic font-light hover:underline "
-          >
-            Basic Tax Calculator
-          </Link>
-        </li>
-
-        <li className="mb-4">
-          <Link
-            href="/qrcodegen"
+            href="/basiccalc"
             className="text-black  text-basic font-light hover:underline"
           >
-            QR Code Generator
+            Calculator
           </Link>
         </li>
-        <li className="mb-4">
+        <li className="mb-2">
           <Link
             href="/crud"
             className="text-black  text-basic font-light hover:underline"
@@ -65,12 +56,30 @@ export default function Home() {
             Reminders
           </Link>
         </li>
-        <li className="mb-4">
+        <li className="mb-2">
           <Link
-            href="/basiccalc"
+            href="/taxparameters"
+            className="text-black  text-basic font-light hover:underline "
+          >
+            Basic Tax & NI Calculator
+          </Link>
+        </li>
+
+        <li className="mb-2">
+          <Link
+            href="/qrcodegen"
             className="text-black  text-basic font-light hover:underline"
           >
-            Calculator
+            QR Code Generator
+          </Link>
+        </li>
+
+        <li className="mb-2">
+          <Link
+            href="/thesaurus"
+            className="text-black  text-basic font-light hover:underline"
+          >
+            Thesaurus
           </Link>
         </li>
       </ul>
