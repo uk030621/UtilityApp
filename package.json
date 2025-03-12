@@ -13,6 +13,7 @@
     "bcryptjs": "^2.4.3",
     "file-saver": "^2.0.5",
     "framer-motion": "^12.5.0",
+    "mathjs": "^14.3.1",
     "mongoose": "^8.4.4",
     "next": "^14.2.24",
     "next-auth": "^4.24.7",

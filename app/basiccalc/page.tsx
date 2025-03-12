@@ -3,17 +3,30 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { evaluate } from "mathjs";
 
 export default function Calculator() {
   const [input, setInput] = useState<string>("");
   const [history, setHistory] = useState<string[]>([]);
 
+  const validateInput = (value: string) => {
+    // Allow only valid characters: digits, operators, parentheses, decimals
+    const validPattern = /^[0-9+\-*/().%√x\s]*$/;
+    return validPattern.test(value);
+  };
+
   const handleButtonClick = (value: string) => {
     if (value === "=") {
       try {
-        const result = eval(input).toString();
-        setInput(result);
-        setHistory((prev) => [input + " = " + result, ...prev].slice(0, 5)); // Store last 5 calculations
+        if (validateInput(input)) {
+          const result = evaluate(input).toString();
+          setInput(result);
+          setHistory(
+            (prev) => [input + " = " + result, ...prev].slice(0, 5) // Store last 5 calculations
+          );
+        } else {
+          setInput("Invalid Input");
+        }
       } catch {
         setInput("Error");
       }
@@ -22,13 +35,31 @@ export default function Calculator() {
     } else if (value === "←") {
       setInput(input.slice(0, -1));
     } else if (value === "x²") {
-      setInput((prev) =>
-        prev ? Math.pow(parseFloat(prev), 2).toString() : ""
-      );
+      try {
+        setInput((prev) =>
+          prev ? Math.pow(parseFloat(prev), 2).toString() : ""
+        );
+      } catch {
+        setInput("Error");
+      }
     } else if (value === "√x") {
-      setInput((prev) => (prev ? Math.sqrt(parseFloat(prev)).toString() : ""));
+      try {
+        setInput((prev) =>
+          prev
+            ? parseFloat(prev) >= 0
+              ? Math.sqrt(parseFloat(prev)).toString()
+              : "Invalid"
+            : ""
+        );
+      } catch {
+        setInput("Error");
+      }
     } else if (value === "%") {
-      setInput((prev) => (prev ? (parseFloat(prev) / 100).toString() : ""));
+      try {
+        setInput((prev) => (prev ? (parseFloat(prev) / 100).toString() : ""));
+      } catch {
+        setInput("Error");
+      }
     } else {
       setInput((prev) => prev + value);
     }
@@ -39,8 +70,8 @@ export default function Calculator() {
   const buttons = [
     { label: "C", style: "bg-blue-500 hover:bg-blue-600" },
     { label: "←", style: "bg-blue-500 hover:bg-blue-600" },
-    { label: "x²", style: "bg-blue-500 hover:bg-blue-600" },
-    { label: "√x", style: "bg-blue-500 hover:bg-blue-600" },
+    { label: "(", style: "bg-blue-500 hover:bg-blue-600" },
+    { label: ")", style: "bg-blue-500 hover:bg-blue-600" },
 
     { label: "7", style: "bg-gray-600 hover:bg-gray-700" },
     { label: "8", style: "bg-gray-600 hover:bg-gray-700" },
