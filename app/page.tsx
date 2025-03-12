@@ -27,7 +27,8 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-start py-4 bg-gradient-to-b from-slate-100 to-slate-500 px-4">
       <h1 className="text-3xl font-bold mb-6">
-        HANDY APPS <span className="text-5xl">👋</span>
+        <span className="text-5xl">👋</span> HANDY APPS{" "}
+        <span className="text-5xl">👋</span>
       </h1>
       {/*<h1 className="text-xl font-extrabold">
         Welcome{session?.user?.name ? `, ${session.user.name}` : ""}!
