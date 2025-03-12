@@ -7,6 +7,7 @@ export default function TaxParameters() {
   const [params, setParams] = useState([]);
   const [errors, setErrors] = useState({});
   const [fetched, setFetched] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // <-- Added for loading state
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [newParam, setNewParam] = useState({
     year: "",
@@ -52,11 +53,15 @@ export default function TaxParameters() {
         .then((data) => {
           setParams(data);
           setFetched(true);
+          setIsLoading(false); // <-- Stop loading once data is fetched
           if (data.length === 0) {
             autoPostDefaultParameters();
           }
         })
-        .catch((err) => console.error("Error loading parameters:", err));
+        .catch((err) => {
+          console.error("Error loading parameters:", err);
+          setIsLoading(false); // <-- Stop loading on error
+        });
     }
   }, [fetched]);
 
@@ -201,7 +206,9 @@ export default function TaxParameters() {
           className="bg-black text-white px-4 py-2 rounded-md w-full text-left flex justify-between items-center"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
-          {isDropdownOpen ? "Hide Tax & NI Form ▲" : "Show Tax & NI Form ▼"}
+          {isDropdownOpen
+            ? "Hide Tax & NI Form ▲"
+            : "Show Add / Edit Tax & NI Form ▼"}
         </button>
 
         {isDropdownOpen && (
@@ -337,90 +344,103 @@ export default function TaxParameters() {
 
       {/* Table Section */}
       <div className="overflow-x-auto max-h-[calc(100vh-200px)] mt-2 rounded-md">
-        <table className="table-auto w-full border-collapse">
-          <thead className="text-left text-sm sticky top-0 bg-white z-10">
-            <tr>
-              <th className="border px-4 py-2 bg-gray-100">Tax Year</th>
-              <th className="border px-4 py-2 bg-gray-100">Income Tax</th>
-              <th className="border px-4 py-2 bg-gray-100">
-                National Insurance
-              </th>
-              <th className="border px-4 py-2 bg-gray-100">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="text-xs">
-            {params
-              .sort((a, b) => a.year - b.year)
-              .map((p) => (
-                <tr key={p._id} className="even:bg-gray-100 odd:bg-white">
-                  <td className="border px-4 py-2">
-                    {p.year} / {+p.year + 1}
-                  </td>
-                  <td className="border px-4 py-2">
-                    <ul>
-                      {Object.entries(p.incomeTax).map(([key, value]) => (
-                        <li className="mb-3" key={key}>
-                          <strong>
-                            {key
-                              .replace(/([A-Z])/g, " $1")
-                              .toLowerCase()
-                              .replace(/\b\w/g, (char) => char.toUpperCase())}
-                            :
-                          </strong>{" "}
-                          {unitMapping[key] === "£"
-                            ? `£${value}`
-                            : unitMapping[key] === "%"
-                            ? `${value}%`
-                            : value}
-                        </li>
-                      ))}
-                    </ul>
-                  </td>
-                  <td className="border px-4 py-2">
-                    <ul>
-                      {Object.entries(p.nationalInsurance).map(
-                        ([key, value]) => (
-                          <li className="mb-3" key={key}>
-                            <strong>
-                              {key
-                                .replace(/([A-Z])/g, " $1")
-                                .toLowerCase()
-                                .replace(/\b\w/g, (char) => char.toUpperCase())}
-                              :
-                            </strong>{" "}
-                            {unitMapping[key] === "£"
-                              ? `£${value}`
-                              : unitMapping[key] === "%"
-                              ? `${value}%`
-                              : value}
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </td>
-                  <td className="border px-4 py-2">
-                    <div className="flex flex-col">
-                      <button
-                        className="text-left mb-10"
-                        onClick={() => {
-                          setNewParam(p);
-                          setIsDropdownOpen(true); // Automatically open dropdown on edit
-                        }}
-                      >
-                        ✏️ Edit
-                      </button>
-                      <button
-                        className="text-left"
-                        onClick={() => handleDelete(p._id)}
-                      >
-                        🗑️ Trash
-                      </button>
-                    </div>
-                  </td>
+        {/* Loading message */}
+        {isLoading ? (
+          <div className="text-left p-4 text-white bg-green-800 rounded-md">
+            <p>Loading tax parameters... Please wait.</p>
+          </div>
+        ) : (
+          <div className="w-full overflow-x-auto">
+            <table className="table-auto w-full border-collapse">
+              <thead className="text-left text-sm sticky top-0 bg-white z-10">
+                <tr>
+                  <th className="border px-4 py-2 bg-gray-100">Tax Year</th>
+                  <th className="border px-4 py-2 bg-gray-100">Income Tax</th>
+                  <th className="border px-4 py-2 bg-gray-100">
+                    National Insurance
+                  </th>
+                  <th className="border px-4 py-2 bg-gray-100">Actions</th>
                 </tr>
-              ))}
-          </tbody>
-        </table>
+              </thead>
+              <tbody className="text-xs">
+                {params
+                  .sort((a, b) => a.year - b.year)
+                  .map((p) => (
+                    <tr key={p._id} className="even:bg-gray-100 odd:bg-white">
+                      <td className="border px-4 py-2">
+                        {p.year} / {+p.year + 1}
+                      </td>
+                      <td className="border px-4 py-2">
+                        <ul>
+                          {Object.entries(p.incomeTax).map(([key, value]) => (
+                            <li className="mb-3" key={key}>
+                              <strong>
+                                {key
+                                  .replace(/([A-Z])/g, " $1")
+                                  .toLowerCase()
+                                  .replace(/\b\w/g, (char) =>
+                                    char.toUpperCase()
+                                  )}
+                                :
+                              </strong>{" "}
+                              {unitMapping[key] === "£"
+                                ? `£${value}`
+                                : unitMapping[key] === "%"
+                                ? `${value}%`
+                                : value}
+                            </li>
+                          ))}
+                        </ul>
+                      </td>
+                      <td className="border px-4 py-2">
+                        <ul>
+                          {Object.entries(p.nationalInsurance).map(
+                            ([key, value]) => (
+                              <li className="mb-3" key={key}>
+                                <strong>
+                                  {key
+                                    .replace(/([A-Z])/g, " $1")
+                                    .toLowerCase()
+                                    .replace(/\b\w/g, (char) =>
+                                      char.toUpperCase()
+                                    )}
+                                  :
+                                </strong>{" "}
+                                {unitMapping[key] === "£"
+                                  ? `£${value}`
+                                  : unitMapping[key] === "%"
+                                  ? `${value}%`
+                                  : value}
+                              </li>
+                            )
+                          )}
+                        </ul>
+                      </td>
+                      <td className="border px-4 py-2">
+                        <div className="flex flex-col">
+                          <button
+                            className="text-left mb-10"
+                            onClick={() => {
+                              setNewParam(p);
+                              setIsDropdownOpen(true);
+                            }}
+                          >
+                            ✏️ Edit
+                          </button>
+                          <button
+                            className="text-left"
+                            onClick={() => handleDelete(p._id)}
+                          >
+                            🗑️ Trash
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

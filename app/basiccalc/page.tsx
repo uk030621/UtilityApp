@@ -64,7 +64,7 @@ export default function Calculator() {
   ];
 
   return (
-    <div className="flex min-h-screen items-start justify-center bg-gray-900 p-4 py-6">
+    <div className="flex min-h-screen items-start justify-center bg-gradient-to-b from-slate-100 to-slate-500 p-4 py-6">
       <div className="w-80 bg-gray-800 rounded-lg p-4 shadow-lg">
         {/* Display */}
         <motion.div
