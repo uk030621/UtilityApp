@@ -8,7 +8,8 @@ export default function TaxParameters() {
   const [errors, setErrors] = useState({});
   const [fetched, setFetched] = useState(false);
   const [isLoading, setIsLoading] = useState(true); // <-- Added for loading state
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isTaxDropdownOpen, setIsTaxDropdownOpen] = useState(false);
+  const [isAnotherDropdownOpen, setIsAnotherDropdownOpen] = useState(false);
   const [newParam, setNewParam] = useState({
     year: "",
     incomeTax: {
@@ -200,18 +201,123 @@ export default function TaxParameters() {
 
   return (
     <div className="bg-black p-2 min-h-screen">
+      {/* Explanatory Dropdown */}
+      <div className="mt-2">
+        <button
+          onClick={() => setIsTaxDropdownOpen(!isTaxDropdownOpen)}
+          className="text-sm text-white hover:underline ml-4 mb-3"
+        >
+          {isTaxDropdownOpen
+            ? "Hide User Guide: Tax Parameter Page"
+            : "User Guide: Tax Parameter Page"}
+        </button>
+
+        {isTaxDropdownOpen && (
+          <div className="mt-4 text-left text-sm bg-gray-50 border rounded-lg p-4">
+            <h2 className=" text-lg font-semibold text-gray-800 mb-2">
+              User Guide: Tax Rates & Allowances Page
+            </h2>
+
+            {/* Overview */}
+            <h3 className="font-bold text-gray-800">Overview</h3>
+            <p className="text-gray-700 mb-3">
+              This page allows you to manage tax and National Insurance (NI)
+              rates & allowances for calculating your basic tax and NI
+              liabilities. You can add, edit, and delete tax years and related
+              rates & allowances. These factors are then used in the Basic Tax
+              Calculator to estimate tax and NI obligations for different
+              employment statuses in the UK (excluding Scotland).
+            </p>
+
+            {/* Key Features */}
+            <h3 className="font-bold text-gray-800">Key Features</h3>
+            <ul className="list-disc list-inside text-gray-700 mt-2 space-y-2">
+              <li>
+                <strong>Default Tax & NI Rates & Allowances Table:</strong> The
+                page displays a pre-set table containing all tax and NI rates &
+                allowances required for calculations.
+              </li>
+
+              <li>
+                <strong>Adding Extra Tax Years, Rates & Allowances:</strong>{" "}
+                Users can add additional tax years along with custom tax and NI
+                rates & allowances. - Click the{" "}
+                <strong>`&quot;`Show Add / Edit Tax & NI Form`&quot;`</strong>{" "}
+                dropdown. - A form will appear where users can enter all
+                required rates & allowances. -{" "}
+                <strong>All fields are mandatory</strong> before submission.
+              </li>
+
+              <li>
+                <strong>
+                  Editing & Deleting Tax Rates & Allowances Tables:
+                </strong>{" "}
+                Once added, tax years can be edited to update values. If a tax
+                year is no longer needed, it can be deleted.
+              </li>
+
+              <li>
+                <strong>Navigating to the Basic Tax Calculator:</strong> After
+                setting up tax parameters, users can go to the Basic Tax
+                Calculator to:
+                <ul className="list-disc list-inside pl-4">
+                  <li>
+                    Select a tax year from the available tax and NI parameter
+                    tables.
+                  </li>
+                  <li>Enter their annual gross income.</li>
+                  <li>
+                    Click <strong>`&quot;`Calculate`&quot;`</strong> to generate
+                    tax and NI results.
+                  </li>
+                </ul>
+              </li>
+
+              <li>
+                <strong>Viewing Tax Results:</strong>- By default, tax results
+                are displayed <strong>annually</strong>. - A{" "}
+                <strong>checkbox</strong> is available to switch between annual
+                and monthly views. - Results include tax and NI calculations
+                for:
+                <ul className="list-disc list-inside pl-4">
+                  <li>Employed individuals</li>
+                  <li>Self-employed individuals</li>
+                  <li>Pensioners</li>
+                </ul>
+              </li>
+            </ul>
+
+            {/* HMRC Tax & NI Link */}
+            <h3 className="mt-3 font-bold text-gray-800">
+              Finding Up-to-Date HMRC Tax & NI Factors
+            </h3>
+            <p className="text-gray-700">
+              For the latest tax and NI rates used in the calculations, visit
+              the official HMRC website:
+              <a
+                href="https://www.gov.uk/government/publications/rates-and-allowances-income-tax/income-tax-rates-and-allowances-current-and-past"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:underline"
+              >
+                🔗 Check HMRC Tax & NI Rates
+              </a>
+            </p>
+          </div>
+        )}
+      </div>
       {/* Dropdown Section */}
       <div className="bg-gray-100 p-4 mb-8 mt-2 rounded">
         <button
           className="bg-black text-white px-4 py-2 rounded-md w-full text-left flex justify-between items-center"
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          onClick={() => setIsAnotherDropdownOpen(!isAnotherDropdownOpen)}
         >
-          {isDropdownOpen
+          {isAnotherDropdownOpen
             ? "Hide Tax & NI Form ▲"
             : "Show Add / Edit Tax & NI Form ▼"}
         </button>
 
-        {isDropdownOpen && (
+        {isAnotherDropdownOpen && (
           <div className="mt-4">
             {/* Link to Tax Calculator */}
             <Link
@@ -222,8 +328,8 @@ export default function TaxParameters() {
             </Link>
             <h2 className="font-bold mb-4 mt-4">
               {newParam._id
-                ? "Edit Tax & NI Parameters"
-                : "Add New Tax & NI Parameters"}
+                ? "Edit Tax & NI Rates & Allowances"
+                : "Add New Tax & NI Rates & Allowances"}
             </h2>
             <div className="grid grid-cols-2 gap-4">
               {/* Year */}
