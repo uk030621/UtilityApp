@@ -370,7 +370,7 @@ export default function TaxParameters() {
                         ...newParam,
                         incomeTax: {
                           ...newParam.incomeTax,
-                          [key]: +e.target.value,
+                          [key]: e.target.value === "" ? "" : +e.target.value, // Keeps empty string as ""
                         },
                       })
                     }
@@ -407,7 +407,7 @@ export default function TaxParameters() {
                         ...newParam,
                         nationalInsurance: {
                           ...newParam.nationalInsurance,
-                          [key]: +e.target.value,
+                          [key]: e.target.value === "" ? "" : +e.target.value, // Keeps empty string
                         },
                       })
                     }
