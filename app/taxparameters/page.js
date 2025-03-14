@@ -214,9 +214,9 @@ export default function TaxParameters() {
 
         {isTaxDropdownOpen && (
           <div className="mt-4 text-left text-sm bg-gray-50 border rounded-lg p-4">
-            <h2 className=" text-lg font-semibold text-gray-800 mb-2">
+            {/*<h2 className=" text-lg font-semibold text-gray-800 mb-2">
               User Guide: Tax Rates & Allowances Page
-            </h2>
+            </h2>*/}
 
             {/* Overview */}
             <h3 className="font-bold text-gray-800">Overview</h3>
