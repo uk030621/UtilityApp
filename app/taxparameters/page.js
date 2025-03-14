@@ -209,7 +209,7 @@ export default function TaxParameters() {
         >
           {isTaxDropdownOpen
             ? "Hide User Guide: Tax Rates & Allowances"
-            : "User Guide: Tax Tax Rates & Allowances"}
+            : "User Guide: Tax Rates & Allowances"}
         </button>
 
         {isTaxDropdownOpen && (
