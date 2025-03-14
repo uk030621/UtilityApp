@@ -200,16 +200,16 @@ export default function TaxParameters() {
   };
 
   return (
-    <div className="bg-black p-2 min-h-screen">
+    <div className="bg-gradient-to-b from-slate-100 to-slate-500 p-2 min-h-screen">
       {/* Explanatory Dropdown */}
       <div className="mt-2">
         <button
           onClick={() => setIsTaxDropdownOpen(!isTaxDropdownOpen)}
-          className="text-sm text-white hover:underline ml-4 mb-3"
+          className=" bg-slate-900 hover:bg-slate-700 px-4 py-2 text-white rounded-md  mb-4 flex-1 text-center"
         >
           {isTaxDropdownOpen
-            ? "Hide User Guide: Tax Parameter Page"
-            : "User Guide: Tax Parameter Page"}
+            ? "Hide User Guide: Tax Rates & Allowances Page"
+            : "User Guide: Tax Tax Rates & Allowances Page"}
         </button>
 
         {isTaxDropdownOpen && (
@@ -307,25 +307,25 @@ export default function TaxParameters() {
         )}
       </div>
       {/* Dropdown Section */}
-      <div className="bg-gray-100 p-4 mb-8 mt-2 rounded">
+      <div className="mb-8">
         <button
-          className="bg-black text-white px-4 py-2 rounded-md w-full text-left flex justify-between items-center"
+          className="bg-slate-900 hover:bg-slate-700 text-white px-4 py-2 rounded-md w-full text-left flex justify-between items-center"
           onClick={() => setIsAnotherDropdownOpen(!isAnotherDropdownOpen)}
         >
           {isAnotherDropdownOpen
-            ? "Hide Tax & NI Form ▲"
+            ? "Hide Add / Edit Tax & NI Form ▲"
             : "Show Add / Edit Tax & NI Form ▼"}
         </button>
 
         {isAnotherDropdownOpen && (
           <div className="mt-4">
             {/* Link to Tax Calculator */}
-            <Link
+            {/*<Link
               href="/calculator"
               className=" px-4 py-2 text-black rounded-md text-sm flex-1 text-center"
             >
               Go To Basic Tax Calculator ▶
-            </Link>
+            </Link>*/}
             <h2 className="font-bold mb-4 mt-4">
               {newParam._id
                 ? "Edit Tax & NI Rates & Allowances"
@@ -443,13 +443,13 @@ export default function TaxParameters() {
 
       <Link
         href="/calculator"
-        className="bg-black px-4 py-2 text-white rounded-md text-sm flex-1 text-center"
+        className="bg-slate-900 hover:bg-slate-700 px-4 py-2 text-white rounded-md  flex-1 text-center"
       >
-        Go To Basic Tax Calculator ▶
+        Go To Tax & NI Calculator ▶
       </Link>
 
       {/* Table Section */}
-      <div className="overflow-x-auto max-h-[calc(100vh-200px)] mt-2 rounded-md">
+      <div className="overflow-x-auto max-h-[calc(100vh-200px)] mt-4 rounded-md">
         {/* Loading message */}
         {isLoading ? (
           <div className="text-left p-4 text-white bg-green-800 rounded-md">

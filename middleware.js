@@ -11,6 +11,7 @@ export async function middleware(req) {
     "/crud",
     "/taxparameters",
     "/calculator",
+    "/thesaurus",
   ];
 
   // Define routes that should be inaccessible to authenticated users
@@ -38,6 +39,7 @@ export const config = {
     "/crud/:path*",
     "/taxparameters/:path*",
     "/calculator/:path*",
+    "/thesaurus",
     "/login",
     "/register",
   ],
