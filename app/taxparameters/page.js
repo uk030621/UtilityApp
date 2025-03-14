@@ -528,7 +528,7 @@ export default function TaxParameters() {
                             className="text-left mb-10"
                             onClick={() => {
                               setNewParam(p);
-                              setIsDropdownOpen(true);
+                              setIsAnotherDropdownOpen(true);
                             }}
                           >
                             ✏️ Edit
