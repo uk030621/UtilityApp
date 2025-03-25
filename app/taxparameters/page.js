@@ -208,8 +208,8 @@ export default function TaxParameters() {
           className=" bg-slate-900 hover:bg-slate-700 px-4 py-2 text-white rounded-md  mb-4 flex-1 text-center"
         >
           {isTaxDropdownOpen
-            ? "Hide User Guide: Tax Rates & Allowances"
-            : "User Guide: Tax Rates & Allowances"}
+            ? "Hide User Guide: Tax Rates & Allowances ▲"
+            : "User Guide: Tax Rates & Allowances ▼"}
         </button>
 
         {isTaxDropdownOpen && (
