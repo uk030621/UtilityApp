@@ -43,22 +43,6 @@ export default function Home() {
       <ul className="list-none text-center">
         <li className="mb-2">
           <Link
-            href="/basiccalc"
-            className="text-black  text-basic font-light hover:underline"
-          >
-            Calculator
-          </Link>
-        </li>
-        <li className="mb-2">
-          <Link
-            href="/crud"
-            className="text-black  text-basic font-light hover:underline"
-          >
-            Reminders
-          </Link>
-        </li>
-        <li className="mb-2">
-          <Link
             href="/taxparameters"
             className="text-black  text-basic font-light hover:underline "
           >
@@ -74,13 +58,28 @@ export default function Home() {
             QR Code Generator
           </Link>
         </li>
-
+        <li className="mb-2">
+          <Link
+            href="/crud"
+            className="text-black  text-basic font-light hover:underline"
+          >
+            Reminders
+          </Link>
+        </li>
         <li className="mb-2">
           <Link
             href="/thesaurus"
             className="text-black  text-basic font-light hover:underline"
           >
             Thesaurus
+          </Link>
+        </li>
+        <li className="mb-2">
+          <Link
+            href="/basiccalc"
+            className="text-black  text-basic font-light hover:underline"
+          >
+            Calculator
           </Link>
         </li>
       </ul>
